@@ -4,11 +4,13 @@
 class ColaClienteCarretas {
 private:
 	Cliente* cliente;
-	Cliente* cliente_sig;
+	ColaClienteCarretas* cliente_sig;
 public:
 	ColaClienteCarretas(Cliente*);
-	void setClienteSig(Cliente*);
+	void setClienteSig(ColaClienteCarretas*);
 	void setCliente(Cliente*);
+	Cliente* getCliente();
+	ColaClienteCarretas* getClienteSig();
 };
 
 #endif // !COLACLIENTECARRETAS_H

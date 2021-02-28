@@ -141,15 +141,21 @@
   <ItemGroup>
     <ClCompile Include="Caja.cpp" />
     <ClCompile Include="Carreta.cpp" />
+    <ClCompile Include="CarretaNodo.cpp" />
     <ClCompile Include="Cliente.cpp" />
+    <ClCompile Include="ColaCarretas.cpp" />
     <ClCompile Include="ColaClienteCarretas.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pila.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Caja.h" />
     <ClInclude Include="Carreta.h" />
+    <ClInclude Include="CarretaNodo.h" />
     <ClInclude Include="Cliente.h" />
+    <ClInclude Include="ColaCarretas.h" />
     <ClInclude Include="ColaClienteCarretas.h" />
+    <ClInclude Include="Pila.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

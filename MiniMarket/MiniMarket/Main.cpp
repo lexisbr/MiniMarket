@@ -3,101 +3,98 @@
 #include <conio.h>
 #include "Cliente.h"
 #include "ColaClienteCarretas.h"
+#include "CarretaNodo.h"
+#include "Pila.h"
+#include "ColaCarretas.h"
+
 using namespace std;
 typedef Cliente* ClienteNodo;
-typedef ColaClienteCarretas* ColaClienteNodo_1;
+typedef ColaClienteCarretas* ColaCarretasNodo;
+typedef CarretaNodo* PilaCarretasNodo;
 
-//Prototipos de funcion
-void pushColaCarretas(ColaClienteNodo_1&, ColaClienteNodo_1&, ClienteNodo);
-bool isColaVacia(ColaClienteNodo_1);
-void crearColaCarretas(int,ColaClienteNodo_1&,ColaClienteNodo_1&);
-void popColaCarretas(ColaClienteNodo_1&, ColaClienteNodo_1&);
-void mostrarColaCarretas(ColaClienteNodo_1);
+//Estructuras de datos
+ColaCarretas colaCarretas;
+Pila pila; 
+
+//Prototipos
+void asignarCarretaCliente(PilaCarretasNodo&,PilaCarretasNodo&,ColaCarretasNodo&,ColaCarretasNodo&);
 
 int main() {
-    ColaClienteNodo_1 frente = NULL;
-    ColaClienteNodo_1 fin = NULL;
+    PilaCarretasNodo pilaCarretas_1 = NULL;
+    PilaCarretasNodo pilaCarretas_2 = NULL;
+
+    ColaCarretasNodo frente_colaCarretas = NULL;
+    ColaCarretasNodo fin_colaCarretas = NULL;
+
     int cantidad_clientes;
+    int cantidad_carretas;
+
 
     cout << "=====================" << endl;
     cout << "|<>| MINI MARKET |<>|" << endl;
     cout << "=====================" << endl;
+    cout << "Ingrese la cantidad de carretas: ";
+    cin >> cantidad_carretas;
     cout << "Ingrese la cantidad de clientes: ";
     cin >> cantidad_clientes;
-    crearColaCarretas(cantidad_clientes, frente, fin);
+   
+  
+
+    cout << "=====================" << endl;
+    cout << "|<>|   Paso #1  |<>|" << endl;
+    cout << "=====================" << endl;
+    pila.crearPilasCarretas(pilaCarretas_1,pilaCarretas_2,cantidad_carretas);
+
+    cout << "=====================" << endl;
+    cout << "|<>|   Paso #2  |<>|" << endl;
+    cout << "=====================" << endl;
+    colaCarretas.crearColaCarretas(cantidad_clientes, frente_colaCarretas, fin_colaCarretas);
+
 
     
 
-    mostrarColaCarretas(frente);
-    popColaCarretas(frente, fin);
-    mostrarColaCarretas(frente);
-    popColaCarretas(frente, fin);
-    mostrarColaCarretas(frente);
+    int opcion=1;
+    int cont = 3;
+    
+    while (opcion == 1) {
+        cout << "=====================" << endl;
+        cout << "|<>|   Paso #"<<cont++<<"  |<>|" << endl;
+        cout << "=====================" << endl;
+        if (!colaCarretas.isColaVacia(frente_colaCarretas)) {
+            asignarCarretaCliente(pilaCarretas_1, pilaCarretas_2, frente_colaCarretas, fin_colaCarretas);
+        }
+        else {
+            cout << "No hay clientes esperando carreta. " << endl;
+        }
+       
+        cout << "\n\tIngrese 1 para continuar o cualquier otra numero para salir: ";
+        cin >> opcion;
+    }
 
-
-    _getch();
     return 0;
 }
 
 
-//Funcion para insertar un nuevo cliente a la cola de carretas
-void pushColaCarretas(ColaClienteNodo_1& frente, ColaClienteNodo_1& fin, ClienteNodo cliente) {
-    ColaClienteNodo_1 nuevo_nodo = new ColaClienteCarretas(cliente);
-    nuevo_nodo->setClienteSig(NULL);
+void asignarCarretaCliente(PilaCarretasNodo& pilaCarretas_1, PilaCarretasNodo& pilaCarretas_2, ColaCarretasNodo& frente_colaCarretas,ColaCarretasNodo& fin_colaCarretas) {
+    Carreta* carreta = NULL;
 
-    if (isColaVacia(frente)) {
-        frente = nuevo_nodo;
+    if (pilaCarretas_1 != NULL || pilaCarretas_2 != NULL) {
+        if (pilaCarretas_1 != NULL) {
+            carreta = pila.popCarretaPila(pilaCarretas_1);
+        }
+        else{
+            carreta = pila.popCarretaPila(pilaCarretas_2);
+        }
+        Cliente* cliente = colaCarretas.popColaCarretas(frente_colaCarretas, fin_colaCarretas);
+        cliente->setCarreta(carreta);
+        cout << "Cliente: " << cliente->getCodigo() << " obtuvo carreta: " << carreta->getCodigo() << endl;
     }
     else {
-        fin->setClienteSig(nuevo_nodo);
+        cout << "No hay carretas disponibles." << endl;
     }
 
-    fin = nuevo_nodo;
-
-    cout << "Cliente " << nuevo_nodo->getCliente()->getCodigo() << " insertado a cola correctamente." << endl;
-   
-}
-
-//Funcion para saber si la cola de clientes para carretas esta vacia
-bool isColaVacia(ColaClienteNodo_1 frente) {
-    return (frente == NULL) ? true : false;
-}
-
-//Crear cola de clientes para las carretas
-void crearColaCarretas(int cantidad_clientes, ColaClienteNodo_1& frente, ColaClienteNodo_1& fin){
-
-    for (int i = 1; i <= cantidad_clientes; i++)
-    {
-        ClienteNodo nuevo_cliente = new Cliente(i);
-        pushColaCarretas(frente, fin, nuevo_cliente);
-    }
-}
-
-// Desencolar el primer elemento insertado 
-void popColaCarretas(ColaClienteNodo_1& frente, ColaClienteNodo_1& fin) {
-    ColaClienteNodo_1 aux = frente;
-
-    if (frente == fin) {
-        frente = NULL;
-        fin = NULL;
-    }
-    else {
-        frente = frente->getClienteSig();
-    }
-
-    cout << "Se elimino Cliente: " << aux->getCliente()->getCodigo() << endl;
-
-    delete aux;
+    
 
 }
 
-void mostrarColaCarretas(ColaClienteNodo_1 frente) {
-    ColaClienteNodo_1 aux = frente;
-    ClienteNodo cliente = NULL;
-    while (aux != NULL) {
-        cliente = aux->getCliente();
-        aux = aux->getClienteSig();
-        cout << "Cliente: " << cliente->getCodigo() << endl;
-       
-    }
-}
+

@@ -1,6 +1,0 @@
-﻿  ColaCarretas.cpp
-  Main.cpp
-  Pila.cpp
-  Generando código...
-C:\Users\jalej\Documents\Estructura de Datos\MiniMarket\MiniMarket\MiniMarket\Pila.cpp(46): warning C4172: devolución de dirección de la variable local o temporal: carreta
-  MiniMarket.vcxproj -> C:\Users\jalej\Documents\Estructura de Datos\MiniMarket\MiniMarket\Debug\MiniMarket.exe

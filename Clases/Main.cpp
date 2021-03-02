@@ -58,10 +58,12 @@ int main()
     cout << "|<>|   Paso #1  |<>|" << endl;
     cout << "=====================" << endl;
     colaCarretas.crearColaCarretas(cantidad_clientes_carretas, frente_colaCarretas, fin_colaCarretas);
+    colaCarretas.mostrarColaCarretas(frente_colaCarretas);
     pila.crearPilasCarretas(pilaCarretas_1,pilaCarretas_2,cantidad_carretas1,cantidad_carretas2);
     pila.mostrarPilaCarretas(pilaCarretas_1,1);
     pila.mostrarPilaCarretas(pilaCarretas_2,2);
     listaCompras.crearListaCompras(frente_listaCompra,fin_listaCompra,cantidad_clientes_compras,cantidad_clientes_carretas);
+    listaCompras.mostrarDatos(frente_listaCompra,fin_listaCompra);
     _getch();
 
     int cont = 2;
@@ -73,8 +75,8 @@ int main()
         cout << "=====================" << endl;
         cout << "|<>|   Paso #" << cont++ << "  |<>|" << endl;
         cout << "=====================" << endl;
-        /*if(cantidad_clientes_nuevos>0)
-        colaCarretas.crearColaCarretas(cantidad_clientes_nuevos, frente_colaCarretas, fin_colaCarretas);*/
+        if(cantidad_clientes_nuevos>0)
+        colaCarretas.agregarClientes(cantidad_clientes_nuevos, frente_colaCarretas, fin_colaCarretas);
 
         if (!colaCarretas.isColaVacia(frente_colaCarretas))
         {
@@ -115,7 +117,7 @@ Cliente *asignarCarretaCliente(PilaCarretasNodo &pilaCarretas_1, PilaCarretasNod
         }
         cliente = colaCarretas.popColaCarretas(frente_colaCarretas, fin_colaCarretas);
         cliente->setCarreta(carreta);
-        cout << "** Cliente: " << cliente->getCodigo() << " obtuvo carreta: " << cliente->getCarreta()->getCodigo() << endl;
+        cout << "-- Cliente: " << cliente->getCodigo() << " obtuvo carreta: " << cliente->getCarreta()->getCodigo() << endl;
     }
 
     return cliente;

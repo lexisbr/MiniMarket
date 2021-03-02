@@ -28,33 +28,56 @@ void ColaCarretas::crearColaCarretas(int cantidad_clientes, ColaClienteCarretas 
 
 void ColaCarretas::agregarClientes(int cantidad_clientes, ColaClienteCarretas *&frente, ColaClienteCarretas *&fin)
 {
-    int cantidad_inicial = cantidadItems(frente);
-    int id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
-    for (int i = 0; i < cantidad_clientes; i++)
+    if (cantidad_clientes > 0)
     {
-        while (yaExisteCliente(frente, id))
+        int cantidad_inicial = obtenerMayor(frente);
+        int id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
+        for (int i = 0; i < cantidad_clientes; i++)
         {
-            cout << "Cantidad de clientes: " << cantidad_clientes << " Cantidad inicial" << cantidad_inicial << endl;
-            id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
+            while (yaExisteCliente(frente, id))
+            {
+                id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
+            }
+            Cliente *nuevo_cliente = new Cliente(id);
+            pushColaCarretas(frente, fin, nuevo_cliente);
         }
-        Cliente *nuevo_cliente = new Cliente(id);
-        pushColaCarretas(frente, fin, nuevo_cliente);
-        cantidad_inicial = cantidadItems(frente);
     }
 }
 
-int ColaCarretas::cantidadItems(ColaClienteCarretas *&frente)
+int ColaCarretas::obtenerMayor(ColaClienteCarretas *&frente)
 {
-    int cont = 0;
+    int actual = 0;
+    int siguiente = 0;
+    int mayor = 0;
     ColaClienteCarretas *aux = frente;
     while (aux != NULL)
     {
-        cout << "Cliente " << aux->getCliente()->getCodigo() << endl;
+        actual = aux->getCliente()->getCodigo();
         aux = aux->getClienteSig();
-        cont++;
+        if (aux == NULL)
+        {
+            siguiente = 0;
+        }
+        else
+        {
+            siguiente = aux->getCliente()->getCodigo();
+        }
+        if (actual > siguiente)
+        {
+            if (actual > mayor)
+            {
+                mayor = actual;
+            }
+        }
+        else
+        {
+            if (siguiente > mayor)
+            {
+                mayor = siguiente;
+            }
+        }
     }
-
-    return cont;
+    return mayor;
 }
 
 bool ColaCarretas::yaExisteCliente(ColaClienteCarretas *&frente, int id)
@@ -88,7 +111,7 @@ void ColaCarretas::pushColaCarretas(ColaClienteCarretas *&frente, ColaClienteCar
 
     fin = nuevo_nodo;
 
-    cout << ">> Cliente " << nuevo_nodo->getCliente()->getCodigo() << " ingresa a cola para adquirir carreta." << endl;
+    // cout << ">> Cliente " << nuevo_nodo->getCliente()->getCodigo() << " ingresa a cola para adquirir carreta." << endl;
 }
 
 //Funcion para saber si la cola de clientes para carretas esta vacia
@@ -135,6 +158,6 @@ void ColaCarretas::mostrarColaCarretas(ColaClienteCarretas *frente)
     }
     else
     {
-        cout << "\t\t-- No hay clientes en la cola para carretas." << endl;
+        cout << "-- No hay clientes en la cola para carretas." << endl;
     }
 }

@@ -12,7 +12,7 @@ public:
 	void agregarClientes(int, ColaClienteCarretas*&, ColaClienteCarretas*&);
 	Cliente* popColaCarretas(ColaClienteCarretas*&, ColaClienteCarretas*&);
 	void mostrarColaCarretas(ColaClienteCarretas*);
-	int cantidadItems(ColaClienteCarretas*&);
+	int obtenerMayor(ColaClienteCarretas*&);
 };
 #endif // ! COLACARRETAS_H
 

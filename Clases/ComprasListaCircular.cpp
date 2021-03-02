@@ -132,7 +132,7 @@ void ComprasListaCircular::crearListaCompras(ComprasNodo *&frente, ComprasNodo *
             }
             Cliente *nuevo_cliente = new Cliente(id);
             addCliente(frente, fin, nuevo_cliente);
-            cout << "\t\t\t## Cliente " << fin->getCliente()->getCodigo() << " Se encuentra comprando." << endl;
+            //cout << "\t\t\t## Cliente " << fin->getCliente()->getCodigo() << " Se encuentra comprando." << endl;
         }
     }
 }

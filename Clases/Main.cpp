@@ -10,6 +10,9 @@
 #include "ComprasListaCircular.h"
 #include "PagosNodo.h"
 #include "ColaPagos.h"
+#include "ListaCajas.h"
+#include "CajaNodo.h"
+
 
 using namespace std;
 typedef Cliente *ClienteNodo;
@@ -17,12 +20,15 @@ typedef ColaClienteCarretas *ColaCarretasNodo;
 typedef CarretaNodo *PilaCarretasNodo;
 typedef ComprasNodo *ListaComprasNodo;
 typedef PagosNodo *_PagosNodo;
+typedef CajaNodo *_CajaNodo;
+
 
 //Estructuras de datos
 ColaCarretas colaCarretas;
 Pila pila;
 ComprasListaCircular listaCompras;
 ColaPagos colaPagos;
+ListaCajas listaCajas;
 
 //Prototipos
 Cliente *asignarCarretaCliente(PilaCarretasNodo &, PilaCarretasNodo &, ColaCarretasNodo &, ColaCarretasNodo &);
@@ -40,6 +46,9 @@ int main()
 
     _PagosNodo frente_colaPagos = NULL;
     _PagosNodo fin_colaPagos = NULL;
+
+    _CajaNodo frente_listaCajas = NULL;
+    _CajaNodo fin_listaCajas = NULL;
 
     int cantidad_clientes_carretas;
     int cantidad_clientes_compras;
@@ -64,6 +73,10 @@ int main()
     cout << "Ingrese la cantidad de cajas: ";
     cin >> cantidad_caja;
 
+    
+    _getch();
+
+
     cout << "=====================" << endl;
     cout << "|<>|   Paso #1  |<>|" << endl;
     cout << "=====================" << endl;
@@ -79,7 +92,6 @@ int main()
     colaPagos.crearCola(cantidad_clientes_pagos, total_clientes, frente_colaPagos, fin_colaPagos);
     colaPagos.mostrarDatos(frente_colaPagos);
 
-    _getch();
 
     int cont = 2;
     int cantidad_clientes_nuevos = 0;
@@ -119,6 +131,7 @@ int main()
         cout << "\n\tIngrese cantidad de clientes que entraran: ";
         cin >> cantidad_clientes_nuevos;
     }
+    
     _getch();
     return 0;
 }

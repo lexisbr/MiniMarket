@@ -2,34 +2,49 @@
 #include <iostream>
 using namespace std;
 
-
-Caja::Caja(int numeroCaja, float tiempoServicio, bool estaLibre, int cliente) {
+Caja::Caja(int numeroCaja, float tiempoServicio, bool estaLibre)
+{
     this->numeroCaja = numeroCaja;
     this->tiempoServicio = tiempoServicio;
     this->estaLibre = estaLibre;
-    this->cliente = cliente;
 }
 
-int Caja::getNumeroCaja() {
+int Caja::getNumeroCaja()
+{
     return numeroCaja;
 }
 
-float Caja::getTiempoServicio() {
+float Caja::getTiempoServicio()
+{
     return tiempoServicio;
 }
 
-bool Caja::isEstaLibre() {
+bool Caja::isEstaLibre()
+{
     return estaLibre;
 }
 
-int Caja::getCliente() {
+Cliente *Caja::getCliente()
+{
     return cliente;
 }
 
-void Caja::setTiempoServicio(float tiempoServicio) {
+void Caja::setNumeroCaja(int numeroCaja)
+{
+    this->numeroCaja = numeroCaja;
+}
+
+void Caja::setTiempoServicio(float tiempoServicio)
+{
     this->tiempoServicio = tiempoServicio;
 }
 
-void Caja::setEstaLibre(bool estaLibre) {
+void Caja::setEstaLibre(bool estaLibre)
+{
     this->estaLibre = estaLibre;
+}
+
+void Caja::setCliente(Cliente *&cliente)
+{
+    this->cliente = cliente;
 }

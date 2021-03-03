@@ -1,18 +1,21 @@
 #ifndef CAJA_H
 #define CAJA_H
+#include "Cliente.h"
 class Caja {
 private:
     int numeroCaja;
     float tiempoServicio;
     bool estaLibre;
-    int cliente;
+    Cliente* cliente;
 public:
-    Caja(int, float, bool, int);
+    Caja(int, float, bool);
     int getNumeroCaja();
     float getTiempoServicio();
     bool isEstaLibre();
-    int getCliente();
+    Cliente* getCliente();
+    void setNumeroCaja(int);
     void setTiempoServicio(float);
     void setEstaLibre(bool);
+    void setCliente(Cliente*&);
 };
 #endif

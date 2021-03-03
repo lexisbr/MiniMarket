@@ -38,7 +38,11 @@ bool ComprasListaCircular::isColaVacia(ComprasNodo *frente)
 // Desencolar el primer elemento insertado
 Cliente *ComprasListaCircular::popCliente(ComprasNodo *&frente, ComprasNodo *&fin)
 {
+    Cliente *cliente = NULL;
     int indice = rand() % 101;
+    //int indice = 3;
+
+
     int indice_aux = 0;
     ComprasNodo *aux = frente;
     ComprasNodo *nodo_anterior = aux;
@@ -66,8 +70,8 @@ Cliente *ComprasListaCircular::popCliente(ComprasNodo *&frente, ComprasNodo *&fi
                     {
                         nodo_anterior->setClienteSig(aux->getClienteSig());
                     }
-                    Cliente *cliente = aux->getCliente();
-                    cout << "Cliente: " << cliente->getCodigo() << " sale de lista de compras." << endl;
+                    cliente = aux->getCliente();
+                    cout << "\t\t\t## Cliente: " << cliente->getCodigo() << " sale de lista de compras." << endl;
                     delete aux;
                     return cliente;
                 }
@@ -80,21 +84,16 @@ Cliente *ComprasListaCircular::popCliente(ComprasNodo *&frente, ComprasNodo *&fi
         else
         {
             aux = aux->getClienteSig();
+            if(aux == frente){
+                aux=NULL;
+            }
+            indice_aux++;
         }
     }
 
-    if (frente == fin)
-    {
-        frente = NULL;
-        fin = NULL;
-    }
-    else
-    {
-        frente = frente->getClienteSig();
-    }
+    cout << "\t\t\t## Ningun cliente sale de comprar aun. "<< endl;
+    return cliente;
 
-    Cliente *cliente = aux->getCliente();
-    cout << "Cliente: " << cliente->getCodigo() << " sale de cola para tomar una carreta." << endl;
 }
 
 void ComprasListaCircular::mostrarDatos(ComprasNodo *&frente, ComprasNodo *&fin)
@@ -110,31 +109,60 @@ void ComprasListaCircular::mostrarDatos(ComprasNodo *&frente, ComprasNodo *&fin)
             {
                 aux = NULL;
             }
-            cout << "\t\t\t## Cliente: " << cliente->getCodigo() << " se encuentra comprando. " << endl;
+            cout << "\t\t\t## Cliente: " << cliente->getCodigo() << " se encuentra comprando con carreta " << cliente->getCarreta()->getCodigo() << ". " << endl;
         }
     }
     else
     {
-        cout << "\t\t\t## No hay clientes comprando. " << endl;
+        cout << "\t\t\t## No hay mas clientes comprando. " << endl;
     }
 }
 
-void ComprasListaCircular::crearListaCompras(ComprasNodo *&frente, ComprasNodo *&fin, int cantidad_clientes, int cantidad_clientes_carretas)
+void ComprasListaCircular::crearListaCompras(ComprasNodo *&frente, ComprasNodo *&fin, int cantidad_clientes, int cantidad_clientes_carretas, int cantidad_carretas)
 {
     if (cantidad_clientes > 0)
     {
         int id = (rand() % cantidad_clientes) + (1 + cantidad_clientes_carretas);
+        int id_carreta = (rand() % cantidad_clientes) + (1 + cantidad_carretas);
         for (int i = 0; i < cantidad_clientes; i++)
         {
             while (yaExisteCliente(frente, fin, id))
             {
                 id = (rand() % cantidad_clientes) + (1 + cantidad_clientes_carretas);
             }
+            while (yaExisteCarreta(frente, fin, id_carreta))
+            {
+                id_carreta = (rand() % cantidad_clientes) + (1 + cantidad_carretas);
+            }
             Cliente *nuevo_cliente = new Cliente(id);
+            Carreta *nueva_carreta = new Carreta(id_carreta);
+            nuevo_cliente->setCarreta(nueva_carreta);
             addCliente(frente, fin, nuevo_cliente);
             //cout << "\t\t\t## Cliente " << fin->getCliente()->getCodigo() << " Se encuentra comprando." << endl;
         }
     }
+}
+
+bool ComprasListaCircular::yaExisteCarreta(ComprasNodo *&frente, ComprasNodo *&fin, int id)
+{
+    ComprasNodo *aux = frente;
+    bool final = false;
+    while (!final && fin != NULL)
+    {
+        if (aux == fin)
+        {
+            final = true;
+        }
+        if (aux->getCliente()->getCarreta()->getCodigo() == id)
+        {
+            return true;
+        }
+        else
+        {
+            aux = aux->getClienteSig();
+        }
+    }
+    return false;
 }
 
 bool ComprasListaCircular::yaExisteCliente(ComprasNodo *&frente, ComprasNodo *&fin, int id)
@@ -155,4 +183,38 @@ bool ComprasListaCircular::yaExisteCliente(ComprasNodo *&frente, ComprasNodo *&f
         }
     }
     return false;
+}
+
+int ComprasListaCircular::obtenerMayor(ComprasNodo *&frente, ComprasNodo *&fin)
+{
+    int actual = 0;
+    int siguiente = 0;
+    int mayor = 0;
+    ComprasNodo *aux = frente;
+    while (aux != NULL)
+    {
+        actual = aux->getCliente()->getCodigo();
+        aux = aux->getClienteSig();
+        siguiente = aux->getCliente()->getCodigo();
+        if (aux == fin)
+        {
+            aux = NULL;
+        }
+
+        if (actual > siguiente)
+        {
+            if (actual > mayor)
+            {
+                mayor = actual;
+            }
+        }
+        else
+        {
+            if (siguiente > mayor)
+            {
+                mayor = siguiente;
+            }
+        }
+    }
+    return mayor;
 }

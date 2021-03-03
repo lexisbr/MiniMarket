@@ -2,7 +2,13 @@
 #include "ColaCarretas.h"
 #include "Cliente.h"
 #include "ColaClienteCarretas.h"
+#include "ComprasListaCircular.h"
+#include "ComprasNodo.h"
+#include "ColaPagos.h"
+#include "PagosNodo.h"
 using namespace std;
+ComprasListaCircular listaCompras_1;
+ColaPagos colaPagos_1;
 
 ColaCarretas::ColaCarretas()
 {
@@ -26,11 +32,16 @@ void ColaCarretas::crearColaCarretas(int cantidad_clientes, ColaClienteCarretas 
     }
 }
 
-void ColaCarretas::agregarClientes(int cantidad_clientes, ColaClienteCarretas *&frente, ColaClienteCarretas *&fin)
+void ColaCarretas::agregarClientes(int cantidad_clientes, ColaClienteCarretas *&frente, ColaClienteCarretas *&fin, ComprasNodo *&frente_listaCompras,ComprasNodo *&fin_listaCompras,PagosNodo *frente_colaPagos)
 {
     if (cantidad_clientes > 0)
     {
         int cantidad_inicial = obtenerMayor(frente);
+        int cantidad_compras = listaCompras_1.obtenerMayor(frente_listaCompras,fin_listaCompras);
+        int cantidad_pagos = colaPagos_1.obtenerMayor(frente_colaPagos);
+
+        
+        cantidad_inicial = cantidad_inicial + cantidad_compras + cantidad_pagos;
         int id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
         for (int i = 0; i < cantidad_clientes; i++)
         {
@@ -158,6 +169,6 @@ void ColaCarretas::mostrarColaCarretas(ColaClienteCarretas *frente)
     }
     else
     {
-        cout << "-- No hay clientes en la cola para carretas." << endl;
+        cout << "-- No hay mas clientes en la cola para carretas." << endl;
     }
 }

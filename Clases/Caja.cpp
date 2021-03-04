@@ -2,11 +2,12 @@
 #include <iostream>
 using namespace std;
 
-Caja::Caja(int numeroCaja, float tiempoServicio, bool estaLibre)
+Caja::Caja(int numeroCaja, int tiempoServicio, bool estaLibre)
 {
     this->numeroCaja = numeroCaja;
     this->tiempoServicio = tiempoServicio;
     this->estaLibre = estaLibre;
+    this->contador_pasos = 0;
 }
 
 int Caja::getNumeroCaja()
@@ -14,7 +15,7 @@ int Caja::getNumeroCaja()
     return numeroCaja;
 }
 
-float Caja::getTiempoServicio()
+int Caja::getTiempoServicio()
 {
     return tiempoServicio;
 }
@@ -27,6 +28,11 @@ bool Caja::isEstaLibre()
 Cliente *Caja::getCliente()
 {
     return cliente;
+}
+
+int Caja::getContadorPasos()
+{
+    return contador_pasos;
 }
 
 void Caja::setNumeroCaja(int numeroCaja)
@@ -47,4 +53,8 @@ void Caja::setEstaLibre(bool estaLibre)
 void Caja::setCliente(Cliente *&cliente)
 {
     this->cliente = cliente;
+}
+
+void Caja::incrementContadorPasos(){
+    contador_pasos++;
 }

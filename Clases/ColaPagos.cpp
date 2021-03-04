@@ -56,12 +56,12 @@ void ColaPagos::mostrarDatos(PagosNodo *frente)
         {
             Cliente *cliente = aux->getCliente();
             aux = aux->getClienteSig();
-            cout << "\t\t\t\t@@ Cliente: " << cliente->getCodigo() << " se encuentra en cola para pagar. " << endl;
+            cout << "\t\t\t\t@@ Cliente: " << cliente->getCodigo() << " se encuentra en cola para pagar." << endl;
         }
     }
     else
     {
-        cout << "\t\t\t\t@@ No hay mas cliente en cola para pagar. " << endl;
+        cout << "\t\t\t\t@@ No hay mas clientes en cola para pagar. " << endl;
     }
 }
 

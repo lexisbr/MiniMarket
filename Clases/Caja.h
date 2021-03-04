@@ -4,18 +4,21 @@
 class Caja {
 private:
     int numeroCaja;
-    float tiempoServicio;
+    int tiempoServicio;
     bool estaLibre;
     Cliente* cliente;
+    int contador_pasos;
 public:
-    Caja(int, float, bool);
+    Caja(int, int, bool);
     int getNumeroCaja();
-    float getTiempoServicio();
+    int getTiempoServicio();
     bool isEstaLibre();
     Cliente* getCliente();
+    int getContadorPasos();
     void setNumeroCaja(int);
     void setTiempoServicio(float);
     void setEstaLibre(bool);
     void setCliente(Cliente*&);
+    void incrementContadorPasos();
 };
 #endif

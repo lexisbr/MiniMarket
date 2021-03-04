@@ -1,4 +1,5 @@
 #include <iostream>
+#include <time.h>
 #include "ColaPagos.h"
 #include "Cliente.h"
 using namespace std;

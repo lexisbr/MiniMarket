@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <conio.h>
+#include <time.h>
 #include <string>
 #include "ComprasListaCircular.h"
 #include "ComprasNodo.h"

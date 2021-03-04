@@ -20,7 +20,6 @@ void ColaCarretas::crearColaCarretas(int cantidad_clientes, ColaClienteCarretas 
 {
     if (cantidad_clientes > 0)
     {
-        srand(time(0));
         int id = (rand() % cantidad_clientes) + 1;
         for (int i = 0; i < cantidad_clientes; i++)
         {

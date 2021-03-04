@@ -35,6 +35,7 @@ void regresarCarreta(Carreta *, PilaCarretasNodo &, PilaCarretasNodo &);
 
 int main()
 {
+    srand(time(NULL));
     PilaCarretasNodo pilaCarretas_1 = NULL;
     PilaCarretasNodo pilaCarretas_2 = NULL;
 
@@ -182,7 +183,6 @@ Cliente *asignarCarretaCliente(PilaCarretasNodo &pilaCarretas_1, PilaCarretasNod
 void regresarCarreta(Carreta *carreta, PilaCarretasNodo &pilaCarretas_1, PilaCarretasNodo &pilaCarretas_2)
 {
     int pila_random = 0;
-    srand(time(0));
     pila_random = (rand() % 2);
     if (pila_random == 0)
     {

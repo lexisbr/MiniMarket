@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
 #include <conio.h>
 #include "ListaCajas.h"
 #include "CajaNodo.h"

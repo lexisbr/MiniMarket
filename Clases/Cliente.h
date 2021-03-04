@@ -7,6 +7,7 @@ private:
 	Carreta* carreta;
 public:
 	Cliente(int);
+	~Cliente();
 	int getCodigo();
 	void setCarreta(Carreta*&);
 	Carreta* getCarreta();

@@ -20,5 +20,6 @@ public:
     void setEstaLibre(bool);
     void setCliente(Cliente*&);
     void incrementContadorPasos();
+    void deleteCliente();
 };
 #endif

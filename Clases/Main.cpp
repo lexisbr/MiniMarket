@@ -12,7 +12,7 @@
 #include "ColaPagos.h"
 #include "ListaCajas.h"
 #include "CajaNodo.h"
-
+#include <time.h>
 
 using namespace std;
 typedef Cliente *ClienteNodo;
@@ -21,7 +21,6 @@ typedef CarretaNodo *PilaCarretasNodo;
 typedef ComprasNodo *ListaComprasNodo;
 typedef PagosNodo *_PagosNodo;
 typedef CajaNodo *_CajaNodo;
-
 
 //Estructuras de datos
 ColaCarretas colaCarretas;
@@ -32,7 +31,7 @@ ListaCajas listaCajas;
 
 //Prototipos
 Cliente *asignarCarretaCliente(PilaCarretasNodo &, PilaCarretasNodo &, ColaCarretasNodo &, ColaCarretasNodo &);
-void regresarCarreta(Carreta *,PilaCarretasNodo &, PilaCarretasNodo &);
+void regresarCarreta(Carreta *, PilaCarretasNodo &, PilaCarretasNodo &);
 
 int main()
 {
@@ -74,9 +73,6 @@ int main()
     cout << "Ingrese la cantidad de cajas: ";
     cin >> cantidad_cajas;
 
-    
-
-
     cout << "=====================" << endl;
     cout << "|<>|   Paso #1  |<>|" << endl;
     cout << "=====================" << endl;
@@ -90,10 +86,10 @@ int main()
     listaCompras.mostrarDatos(frente_listaCompra, fin_listaCompra);
     int total_clientes = cantidad_clientes_carretas + cantidad_clientes_compras;
     total_carretas = total_carretas + cantidad_clientes_compras;
-    colaPagos.crearCola(cantidad_clientes_pagos, total_clientes, frente_colaPagos, fin_colaPagos);
+    colaPagos.crearCola(cantidad_clientes_pagos, total_clientes, frente_colaPagos, fin_colaPagos, total_carretas);
     colaPagos.mostrarDatos(frente_colaPagos);
 
-    listaCajas.crearCajas(frente_listaCajas,fin_listaCajas,cantidad_cajas);
+    listaCajas.crearCajas(frente_listaCajas, fin_listaCajas, cantidad_cajas);
     listaCajas.show(frente_listaCajas);
     _getch();
 
@@ -118,7 +114,6 @@ int main()
             }
         }
 
-
         colaCarretas.mostrarColaCarretas(frente_colaCarretas);
         pila.mostrarPilaCarretas(pilaCarretas_1, 1);
         pila.mostrarPilaCarretas(pilaCarretas_2, 2);
@@ -132,23 +127,31 @@ int main()
         }
         listaCompras.mostrarDatos(frente_listaCompra, fin_listaCompra);
 
-        listaCajas.incrementContadores(frente_listaCajas);
-        Carreta *carreta_regreso = listaCajas.popCliente(frente_listaCajas);
-       /* if(carreta_regreso!=NULL)
+        if (frente_colaPagos != NULL && listaCajas.hayCajasDisponibles(frente_listaCajas))
         {
-            regresarCarreta(carreta_regreso,pilaCarretas_1,pilaCarretas_2);
-        }*/
-        if(frente_colaPagos!=NULL && listaCajas.hayCajasDisponibles(frente_listaCajas)){
-            Cliente *cliente = colaPagos.pop(frente_colaPagos,fin_colaPagos);
-            listaCajas.addCliente(frente_listaCajas,cliente);
+            Cliente *cliente = colaPagos.pop(frente_colaPagos, fin_colaPagos);
+            listaCajas.addCliente(frente_listaCajas, cliente);
         }
         colaPagos.mostrarDatos(frente_colaPagos);
         listaCajas.show(frente_listaCajas);
 
+        Carreta *carreta_regreso = NULL;
+        do
+        {
+            carreta_regreso = listaCajas.popCliente(frente_listaCajas);
+            if (carreta_regreso != NULL)
+            {
+                regresarCarreta(carreta_regreso, pilaCarretas_1, pilaCarretas_2);
+            }
+        } while (carreta_regreso != NULL);
+
+        listaCajas.incrementContadores(frente_listaCajas);
+        /**/
+
         cout << "\n\tIngrese cantidad de clientes que entraran: ";
         cin >> cantidad_clientes_nuevos;
     }
-    
+
     _getch();
     return 0;
 }
@@ -176,18 +179,17 @@ Cliente *asignarCarretaCliente(PilaCarretasNodo &pilaCarretas_1, PilaCarretasNod
     return cliente;
 }
 
- 
 void regresarCarreta(Carreta *carreta, PilaCarretasNodo &pilaCarretas_1, PilaCarretasNodo &pilaCarretas_2)
 {
-    int pila_random = (rand()%1)+1;
-
-    if(pila_random == 1)
+    int pila_random = 0;
+    srand(time(0));
+    pila_random = (rand() % 2);
+    if (pila_random == 0)
     {
-        pila.pushPilaCarretas(pilaCarretas_1,carreta,1);
+        pila.pushPilaCarretas(pilaCarretas_1, carreta, 1);
     }
     else
     {
-        pila.pushPilaCarretas(pilaCarretas_2,carreta,2);
+        pila.pushPilaCarretas(pilaCarretas_2, carreta, 2);
     }
-
 }

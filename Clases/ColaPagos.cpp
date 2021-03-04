@@ -56,7 +56,7 @@ void ColaPagos::mostrarDatos(PagosNodo *frente)
         {
             Cliente *cliente = aux->getCliente();
             aux = aux->getClienteSig();
-            cout << "\t\t\t\t@@ Cliente: " << cliente->getCodigo() << " se encuentra en cola para pagar." << endl;
+            cout << "\t\t\t\t@@ Cliente: " << cliente->getCodigo() << " se encuentra en cola para pagar con Carreta: "<<cliente->getCarreta()->getCodigo()<<"."  << endl;
         }
     }
     else
@@ -65,21 +65,45 @@ void ColaPagos::mostrarDatos(PagosNodo *frente)
     }
 }
 
-void ColaPagos::crearCola(int cantidad_clientes, int cantidad_inicial, PagosNodo *&frente, PagosNodo *&fin)
+void ColaPagos::crearCola(int cantidad_clientes, int cantidad_inicial, PagosNodo *&frente, PagosNodo *&fin, int cantidad_carretas)
 {
     if (cantidad_clientes > 0)
     {
         int id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
+        int id_carreta = (rand() % cantidad_clientes) + (1 + cantidad_carretas);
         for (int i = 0; i < cantidad_clientes; i++)
         {
             while (yaExisteCliente(frente, id))
             {
                 id = (rand() % cantidad_clientes) + (1 + cantidad_inicial);
             }
+            while (yaExisteCarreta(frente, id_carreta))
+            {
+                id_carreta = (rand() % cantidad_clientes) + (1 + cantidad_carretas);
+            }
             Cliente *nuevo_cliente = new Cliente(id);
+            Carreta *nueva_carreta = new Carreta(id_carreta);
+            nuevo_cliente->setCarreta(nueva_carreta);
             push(frente, fin, nuevo_cliente);
         }
     }
+}
+
+bool ColaPagos::yaExisteCarreta(PagosNodo *&frente, int id)
+{
+    PagosNodo *aux = frente;
+    while (aux != NULL)
+    {
+        if (aux->getCliente()->getCarreta()->getCodigo() == id)
+        {
+            return true;
+        }
+        else
+        {
+            aux = aux->getClienteSig();
+        }
+    }
+    return false;
 }
 
 bool ColaPagos::yaExisteCliente(PagosNodo *&frente, int id)

@@ -58,3 +58,9 @@ void Caja::setCliente(Cliente *&cliente)
 void Caja::incrementContadorPasos(){
     contador_pasos++;
 }
+
+void Caja::deleteCliente(){
+    Cliente *&borrar = this->cliente;
+    borrar = NULL;
+
+}

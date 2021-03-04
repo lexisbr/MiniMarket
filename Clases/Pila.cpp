@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <time.h>
 #include <conio.h>
 #include <string>
 #include "Pila.h"
@@ -24,6 +25,7 @@ void Pila::crearPilasCarretas(CarretaNodo *&pila1, CarretaNodo *&pila2, int cant
 	int id = 0;
 	if (cantidad_carretas1 > 0)
 	{
+		srand(time(0));
 		id = (rand() % cantidad_carretas1) + 1;
 		for (int i = 0; i < cantidad_carretas1; i++)
 		{

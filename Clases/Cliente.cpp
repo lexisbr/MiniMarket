@@ -7,6 +7,8 @@ Cliente::Cliente(int codigo) {
 	this->codigo = codigo;
 }
 
+Cliente::~Cliente(){}
+
 int Cliente::getCodigo() {
 	return codigo;
 }

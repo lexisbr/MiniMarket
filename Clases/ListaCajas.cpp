@@ -36,11 +36,11 @@ void ListaCajas::show(CajaNodo *frente)
         aux = aux->getCajaSig();
         if (caja->getCaja()->isEstaLibre())
         {
-            cout << "\t\t\t\t\t** Caja: " << caja->getCaja()->getNumeroCaja() << " esta disponible. tiempo de espera: " << caja->getCaja()->getTiempoServicio() << " contador de turnos: " << caja->getCaja()->getContadorPasos() << endl;
+            cout << "\t\t\t\t\t** Caja: " << caja->getCaja()->getNumeroCaja() << " esta disponible. Tiempo de espera: " << caja->getCaja()->getTiempoServicio() << " Tiempo que lleva: " << caja->getCaja()->getContadorPasos() << endl;
         }
         else
         {
-            cout << "\t\t\t\t\t** Caja: " << caja->getCaja()->getNumeroCaja() << " esta atendiendo a cliente " << caja->getCaja()->getCliente()->getCodigo() << " tiempo de espera: " << caja->getCaja()->getTiempoServicio() << " contador de turnos: " << caja->getCaja()->getContadorPasos() << endl;
+            cout << "\t\t\t\t\t** Caja: " << caja->getCaja()->getNumeroCaja() << " esta atendiendo a cliente " << caja->getCaja()->getCliente()->getCodigo() << " Tiempo de espera: " << caja->getCaja()->getTiempoServicio() << " Tiempo que lleva: " << caja->getCaja()->getContadorPasos() << endl;
         }
     }
 }
@@ -112,7 +112,6 @@ Carreta *ListaCajas::popCliente(CajaNodo *&frente)
 {
     CajaNodo *aux = frente;
     Carreta *carreta = NULL;
-    cout<<"Entra"<<endl;
     while (aux != NULL)
     {
         if (!aux->getCaja()->isEstaLibre())
@@ -120,12 +119,11 @@ Carreta *ListaCajas::popCliente(CajaNodo *&frente)
             if (aux->getCaja()->getTiempoServicio() == aux->getCaja()->getContadorPasos())
             {
                 carreta = aux->getCaja()->getCliente()->getCarreta();
-                cout<<"Cliente "<<aux->getCaja()->getCliente()->getCodigo()<<endl;
-                cout<<"Carreta "<<carreta->getCodigo()<<endl;
-                //cout << "\t\t\t\t@@ Cliente: " << aux->getCaja()->getCliente()->getCodigo() << "  sale de Caja: " << aux->getCaja()->getNumeroCaja() << " deja Carreta: " << carreta->getCodigo() << "." << endl;
-                //Cliente *cliente_delete = aux->getCaja()->getCliente();
-               // Cliente *cliente = NULL;
-              //  aux->getCaja()->setCliente(cliente);
+                cout << "\n\t\t\t\t\t\t--> Cliente: " << aux->getCaja()->getCliente()->getCodigo() << "  sale de Caja: " << aux->getCaja()->getNumeroCaja() << " deja Carreta: " << carreta->getCodigo() << ".\n" << endl;
+                Caja *nueva_caja = new Caja(aux->getCaja()->getNumeroCaja(),aux->getCaja()->getTiempoServicio(),true);
+                delete aux->getCaja();
+
+                aux->setCaja(nueva_caja);
                 return carreta;
             }
             else

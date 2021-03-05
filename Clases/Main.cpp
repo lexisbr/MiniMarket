@@ -12,6 +12,7 @@
 #include "ColaPagos.h"
 #include "ListaCajas.h"
 #include "CajaNodo.h"
+#include "Graficador.h"
 #include <time.h>
 
 using namespace std;
@@ -28,6 +29,7 @@ Pila pila;
 ComprasListaCircular listaCompras;
 ColaPagos colaPagos;
 ListaCajas listaCajas;
+Graficador graficar;
 
 //Prototipos
 Cliente *asignarCarretaCliente(PilaCarretasNodo &, PilaCarretasNodo &, ColaCarretasNodo &, ColaCarretasNodo &);
@@ -35,6 +37,7 @@ void regresarCarreta(Carreta *, PilaCarretasNodo &, PilaCarretasNodo &);
 
 int main()
 {
+    //graficar.writeFile();
     srand(time(NULL));
     PilaCarretasNodo pilaCarretas_1 = NULL;
     PilaCarretasNodo pilaCarretas_2 = NULL;
@@ -92,6 +95,7 @@ int main()
 
     listaCajas.crearCajas(frente_listaCajas, fin_listaCajas, cantidad_cajas);
     listaCajas.show(frente_listaCajas);
+
     _getch();
 
     int cont = 2;
@@ -116,6 +120,8 @@ int main()
         }
 
         colaCarretas.mostrarColaCarretas(frente_colaCarretas);
+        string grafo = graficar.graficarColaCarretas(frente_colaCarretas) + graficar.graficarPilaCarretas1(pilaCarretas_1) + graficar.graficarPilaCarretas2(pilaCarretas_2)+graficar.graficarListaCompras(frente_listaCompra,fin_listaCompra)+graficar.graficarColaPagos(frente_colaPagos)+graficar.graficarListaCajas(frente_listaCajas);
+        graficar.writeFile(grafo);
         pila.mostrarPilaCarretas(pilaCarretas_1, 1);
         pila.mostrarPilaCarretas(pilaCarretas_2, 2);
         if (!listaCompras.isColaVacia(frente_listaCompra))
@@ -174,7 +180,7 @@ Cliente *asignarCarretaCliente(PilaCarretasNodo &pilaCarretas_1, PilaCarretasNod
         }
         cliente = colaCarretas.popColaCarretas(frente_colaCarretas, fin_colaCarretas);
         cliente->setCarreta(carreta);
-        cout << "-- Cliente: " << cliente->getCodigo() << " obtuvo carreta: " << cliente->getCarreta()->getCodigo() << endl;
+        cout << "-- Cliente: " << cliente->getCodigo() << " entra a comprar con Carreta: " << cliente->getCarreta()->getCodigo() << endl;
     }
 
     return cliente;

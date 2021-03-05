@@ -1,0 +1,58 @@
+digraph G {
+label = "MiniMarket"
+graph [fontsize=10 fontname="Verdana"]
+node [shape=record fontsize=10 fontname="Verdana"]
+subgraph cluster_0 {
+node [style=filled];
+"->Cliente: 14"->"->Cliente: 15";
+"->Cliente: 15"->"->Cliente: 12";
+"->Cliente: 12"->"->Cliente: 13";
+"->Cliente: 13";
+label="Cola para Carretas";
+ color=blue;
+ }
+subgraph cluster_1 {
+node [style=filled];
+"->Carreta: 18"->"->Carreta: 1";
+"->Carreta: 1";
+label="Pila 1 de Carretas";
+ color=brown4;
+ }
+subgraph cluster_2 {
+node [style=filled];
+"->Carreta: 17"->"->Carreta: 20";
+"->Carreta: 20"->"->Carreta: 8";
+"->Carreta: 8"->"->Carreta: 9";
+"->Carreta: 9"->"->Carreta: 10";
+"->Carreta: 10"->"->Carreta: 7";
+"->Carreta: 7"->"->Carreta: 6";
+"->Carreta: 6";
+label="Pila 2 de Carretas";
+ color=forestgreen;
+ }
+subgraph cluster_3 {
+node [style=filled];
+"->Cliente: 8 ->Carreta: 14"->"->Cliente: 7 ->Carreta: 15";
+"->Cliente: 7 ->Carreta: 15"->"->Cliente: 10 ->Carreta: 12";
+"->Cliente: 10 ->Carreta: 12"->"->Cliente: 9 ->Carreta: 11";
+"->Cliente: 9 ->Carreta: 11"->"->Cliente: 6 ->Carreta: 13";
+"->Cliente: 6 ->Carreta: 13"->"->Cliente: 5 ->Carreta: 4";
+"->Cliente: 5 ->Carreta: 4"->"->Cliente: 1 ->Carreta: 3";
+"->Cliente: 1 ->Carreta: 3"->"->Cliente: 3 ->Carreta: 2";
+"->Cliente: 3 ->Carreta: 2"->"->Cliente: 4 ->Carreta: 19";
+"->Cliente: 4 ->Carreta: 19"->"->Cliente: 11 ->Carreta: 16";
+"->Cliente: 11 ->Carreta: 16"->"->Cliente: 8 ->Carreta: 14";
+label="Lista Circular de Compras";
+ color=crimson;
+ }
+subgraph cluster_5 {
+node [style=filled];
+"->Caja: 1 ->Turnos: 3 ->Estado: Libre"->"->Caja: 2 ->Turnos: 5 ->Estado: Libre";
+"->Caja: 2 ->Turnos: 5 ->Estado: Libre"->"->Caja: 3 ->Turnos: 8 ->Estado: Libre";
+"->Caja: 3 ->Turnos: 8 ->Estado: Libre"->"->Caja: 4 ->Turnos: 5 ->Estado: Libre";
+"->Caja: 4 ->Turnos: 5 ->Estado: Libre"->"->Caja: 5 ->Turnos: 10 ->Estado: Ocupado ->Cliente: 2";
+"->Caja: 5 ->Turnos: 10 ->Estado: Ocupado ->Cliente: 2";
+label="Lista de Cajas";
+ color=fuchsia;
+ }
+}

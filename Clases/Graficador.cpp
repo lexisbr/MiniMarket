@@ -7,7 +7,7 @@ using namespace std;
 void Graficador::writeFile(string grafo)
 {
     ofstream myfile;
-    myfile.open("example.dot");
+    myfile.open("grafica.dot");
     myfile << "digraph G {\n";
     myfile << "label = \"MiniMarket\"\n";
     //    myfile << "rankdir = \"LR\"\n";
@@ -16,7 +16,7 @@ void Graficador::writeFile(string grafo)
     myfile << grafo;
     myfile << "}\n";
     myfile.close();
-    system("dot -Tpng example.dot -o imagen.png");
+    system("dot -Tpng grafica.dot -o grafica.png");
 }
 
 string Graficador::graficarColaCarretas(ColaClienteCarretas *frente_colaCarretas)

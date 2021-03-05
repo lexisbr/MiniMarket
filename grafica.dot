@@ -1,0 +1,82 @@
+digraph G {
+label = "MiniMarket"
+graph [fontsize=10 fontname="Verdana"]
+node [shape=record fontsize=10 fontname="Verdana"]
+subgraph cluster_0 {
+node [style=filled];
+"->Cliente: 2"->"->Cliente: 1";
+"->Cliente: 1"->"->Cliente: 46";
+"->Cliente: 46"->"->Cliente: 47";
+"->Cliente: 47";
+label="Cola para Carretas";
+ color=blue;
+ }
+subgraph cluster_1 {
+node [style=filled];
+"->Carreta: 4"->"->Carreta: 5";
+"->Carreta: 5"->"->Carreta: 7";
+"->Carreta: 7";
+label="Pila 1 de Carretas";
+ color=brown4;
+ }
+subgraph cluster_2 {
+node [style=filled];
+"->Carreta: 30"->"->Carreta: 9";
+"->Carreta: 9"->"->Carreta: 14";
+"->Carreta: 14"->"->Carreta: 10";
+"->Carreta: 10"->"->Carreta: 13";
+"->Carreta: 13"->"->Carreta: 11";
+"->Carreta: 11"->"->Carreta: 12";
+"->Carreta: 12"->"->Carreta: 15";
+"->Carreta: 15"->"->Carreta: 16";
+"->Carreta: 16";
+label="Pila 2 de Carretas";
+ color=forestgreen;
+ }
+subgraph cluster_3 {
+node [style=filled];
+"->Cliente: 16 ->Carreta: 20"->"->Cliente: 11 ->Carreta: 19";
+"->Cliente: 11 ->Carreta: 19"->"->Cliente: 13 ->Carreta: 23";
+"->Cliente: 13 ->Carreta: 23"->"->Cliente: 15 ->Carreta: 17";
+"->Cliente: 15 ->Carreta: 17"->"->Cliente: 12 ->Carreta: 24";
+"->Cliente: 12 ->Carreta: 24"->"->Cliente: 9 ->Carreta: 18";
+"->Cliente: 9 ->Carreta: 18"->"->Cliente: 14 ->Carreta: 21";
+"->Cliente: 14 ->Carreta: 21"->"->Cliente: 10 ->Carreta: 22";
+"->Cliente: 10 ->Carreta: 22"->"->Cliente: 8 ->Carreta: 3";
+"->Cliente: 8 ->Carreta: 3"->"->Cliente: 4 ->Carreta: 1";
+"->Cliente: 4 ->Carreta: 1"->"->Cliente: 7 ->Carreta: 2";
+"->Cliente: 7 ->Carreta: 2"->"->Cliente: 6 ->Carreta: 8";
+"->Cliente: 6 ->Carreta: 8"->"->Cliente: 3 ->Carreta: 6";
+"->Cliente: 3 ->Carreta: 6"->"->Cliente: 5 ->Carreta: 25";
+"->Cliente: 5 ->Carreta: 25"->"->Cliente: 16 ->Carreta: 20";
+label="Lista Circular de Compras";
+ color=crimson;
+ }
+subgraph cluster_4 {
+node [style=filled];
+"->Cliente: 23"->"->Cliente: 22";
+"->Cliente: 22";
+label="Cola para Pagos";
+ color=fuchsia;
+ }
+subgraph cluster_5 {
+node [style=filled];
+"->Caja: 1 ->Turnos: 4 ->Estado: Ocupado ->Cliente: 24"->"->Caja: 2 ->Turnos: 3 ->Estado: Libre";
+"->Caja: 2 ->Turnos: 3 ->Estado: Libre"->"->Caja: 3 ->Turnos: 5 ->Estado: Ocupado ->Cliente: 18";
+"->Caja: 2 ->Turnos: 3 ->Estado: Libre"->"->Caja: 1 ->Turnos: 4 ->Estado: Ocupado ->Cliente: 24";
+"->Caja: 3 ->Turnos: 5 ->Estado: Ocupado ->Cliente: 18"->"->Caja: 4 ->Turnos: 8 ->Estado: Ocupado ->Cliente: 20";
+"->Caja: 3 ->Turnos: 5 ->Estado: Ocupado ->Cliente: 18"->"->Caja: 2 ->Turnos: 3 ->Estado: Libre";
+"->Caja: 4 ->Turnos: 8 ->Estado: Ocupado ->Cliente: 20"->"->Caja: 5 ->Turnos: 2 ->Estado: Ocupado ->Cliente: 21";
+"->Caja: 4 ->Turnos: 8 ->Estado: Ocupado ->Cliente: 20"->"->Caja: 3 ->Turnos: 5 ->Estado: Ocupado ->Cliente: 18";
+"->Caja: 5 ->Turnos: 2 ->Estado: Ocupado ->Cliente: 21"->"->Caja: 6 ->Turnos: 1 ->Estado: Libre";
+"->Caja: 5 ->Turnos: 2 ->Estado: Ocupado ->Cliente: 21"->"->Caja: 4 ->Turnos: 8 ->Estado: Ocupado ->Cliente: 20";
+"->Caja: 6 ->Turnos: 1 ->Estado: Libre"->"->Caja: 7 ->Turnos: 5 ->Estado: Libre";
+"->Caja: 6 ->Turnos: 1 ->Estado: Libre"->"->Caja: 5 ->Turnos: 2 ->Estado: Ocupado ->Cliente: 21";
+"->Caja: 7 ->Turnos: 5 ->Estado: Libre"->"->Caja: 8 ->Turnos: 3 ->Estado: Libre";
+"->Caja: 7 ->Turnos: 5 ->Estado: Libre"->"->Caja: 6 ->Turnos: 1 ->Estado: Libre";
+"->Caja: 8 ->Turnos: 3 ->Estado: Libre";
+"->Caja: 8 ->Turnos: 3 ->Estado: Libre"->"->Caja: 7 ->Turnos: 5 ->Estado: Libre";
+label="Lista de Cajas";
+ color=fuchsia;
+ }
+}

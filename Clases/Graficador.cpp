@@ -10,7 +10,7 @@ void Graficador::writeFile(string grafo)
     myfile.open("example.dot");
     myfile << "digraph G {\n";
     myfile << "label = \"MiniMarket\"\n";
-//    myfile << "rankdir = \"LR\"\n";
+    //    myfile << "rankdir = \"LR\"\n";
     myfile << "graph [fontsize=10 fontname=\"Verdana\"]\n";
     myfile << "node [shape=record fontsize=10 fontname=\"Verdana\"]\n";
     myfile << grafo;
@@ -205,9 +205,9 @@ string Graficador::graficarListaCajas(CajaNodo *frente)
 
         if (aux != NULL)
         {
-            string carreta_sig_str = to_string(aux->getCaja()->getNumeroCaja());
+            string caja_sig_str = to_string(aux->getCaja()->getNumeroCaja());
             string tiempo = to_string(aux->getCaja()->getTiempoServicio());
-            grafo.append("->\"->Caja: " + carreta_sig_str);
+            grafo.append("->\"->Caja: " + caja_sig_str);
             grafo.append(" ->Turnos: " + tiempo);
             if (aux->getCaja()->isEstaLibre())
             {
@@ -224,6 +224,38 @@ string Graficador::graficarListaCajas(CajaNodo *frente)
         else
         {
             grafo.append(";\n");
+        }
+
+        if (caja->getCajaAnt() != NULL)
+        {
+            grafo.append("\"->Caja: " + caja_str);
+            grafo.append(" ->Turnos: " + tiempo);
+            if (caja->getCaja()->isEstaLibre())
+            {
+                grafo.append(" ->Estado: Libre\"");
+            }
+            else
+            {
+                grafo.append(" ->Estado: Ocupado");
+                string cliente = to_string(caja->getCaja()->getCliente()->getCodigo());
+                grafo.append(" ->Cliente: " + cliente);
+                grafo.append("\"");
+            }
+            string caja_ant_str = to_string(caja->getCajaAnt()->getCaja()->getNumeroCaja());
+            string tiempo = to_string(caja->getCajaAnt()->getCaja()->getTiempoServicio());
+            grafo.append("->\"->Caja: " + caja_ant_str);
+            grafo.append(" ->Turnos: " + tiempo);
+            if (caja->getCajaAnt()->getCaja()->isEstaLibre())
+            {
+                grafo.append(" ->Estado: Libre");
+            }
+            else
+            {
+                grafo.append(" ->Estado: Ocupado");
+                string cliente = to_string(caja->getCajaAnt()->getCaja()->getCliente()->getCodigo());
+                grafo.append(" ->Cliente: " + cliente);
+            }
+            grafo.append("\";\n");
         }
     }
     grafo.append("label=\"Lista de Cajas\";\n color=fuchsia;\n }\n");

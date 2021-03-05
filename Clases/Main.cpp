@@ -96,13 +96,17 @@ int main()
     listaCajas.crearCajas(frente_listaCajas, fin_listaCajas, cantidad_cajas);
     listaCajas.show(frente_listaCajas);
 
+    string grafo = graficar.graficarColaCarretas(frente_colaCarretas) + graficar.graficarPilaCarretas1(pilaCarretas_1) + graficar.graficarPilaCarretas2(pilaCarretas_2) + graficar.graficarListaCompras(frente_listaCompra, fin_listaCompra) + graficar.graficarColaPagos(frente_colaPagos) + graficar.graficarListaCajas(frente_listaCajas);
+    graficar.writeFile(grafo);
+    cout << "\n\n\t\t\t============================= SE HA GENERADO GRAFO =============================" << endl;
+    cout << "\n\n\t\t\t Presione cualquier tecla para continuar... ";
     _getch();
 
     int cont = 2;
     int cantidad_clientes_nuevos = 0;
     bool final = true;
-
-    while (final)
+    int opcion = 1;
+    while (opcion == 1)
     {
         cout << "=====================" << endl;
         cout << "|<>|   Paso #" << cont++ << "  |<>|" << endl;
@@ -120,8 +124,6 @@ int main()
         }
 
         colaCarretas.mostrarColaCarretas(frente_colaCarretas);
-        string grafo = graficar.graficarColaCarretas(frente_colaCarretas) + graficar.graficarPilaCarretas1(pilaCarretas_1) + graficar.graficarPilaCarretas2(pilaCarretas_2)+graficar.graficarListaCompras(frente_listaCompra,fin_listaCompra)+graficar.graficarColaPagos(frente_colaPagos)+graficar.graficarListaCajas(frente_listaCajas);
-        graficar.writeFile(grafo);
         pila.mostrarPilaCarretas(pilaCarretas_1, 1);
         pila.mostrarPilaCarretas(pilaCarretas_2, 2);
         if (!listaCompras.isColaVacia(frente_listaCompra))
@@ -155,8 +157,16 @@ int main()
         listaCajas.incrementContadores(frente_listaCajas);
         /**/
 
-        cout << "\n\tIngrese cantidad de clientes que entraran: ";
-        cin >> cantidad_clientes_nuevos;
+        string grafo = graficar.graficarColaCarretas(frente_colaCarretas) + graficar.graficarPilaCarretas1(pilaCarretas_1) + graficar.graficarPilaCarretas2(pilaCarretas_2) + graficar.graficarListaCompras(frente_listaCompra, fin_listaCompra) + graficar.graficarColaPagos(frente_colaPagos) + graficar.graficarListaCajas(frente_listaCajas);
+        graficar.writeFile(grafo);
+        cout << "\n\n\t\t\t============================= SE HA GENERADO GRAFO =============================" << endl;
+        cout << "\n\tQue desea realizar? (Continuar = 1) (Salir = 2) ";
+        cin >> opcion;
+        if (opcion == 1)
+        {
+            cout << "\n\tIngrese cantidad de clientes que entraran: ";
+            cin >> cantidad_clientes_nuevos;
+        }
     }
 
     _getch();
